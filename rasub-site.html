@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RASUB — Ride And Shape Union Bordeaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1e2022;
+    --black-deep: #161819;
+    --cream: #f2d97e;
+    --cream-dim: #c9b460;
+    --white: #f5f2ec;
+    --gray: #888;
+    --gray-dim: #444;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(22,24,25,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(242,217,126,0.08);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    text-decoration: none;
+  }
+
+  .nav-bolt {
+    width: 18px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .nav-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--cream);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity .2s, color .2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--cream); }
+
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black-deep) !important;
+    background: var(--cream);
+    padding: .45rem 1.2rem;
+    border-radius: 4px;
+    opacity: 1 !important;
+    transition: background .2s !important;
+  }
+
+  .nav-cta:hover { background: var(--cream-dim) !important; }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(242,217,126,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-bolt {
+    width: 90px;
+    margin-bottom: 2rem;
+    animation: floatbolt 3s ease-in-out infinite;
+  }
+
+  @keyframes floatbolt {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(72px, 14vw, 140px);
+    line-height: .9;
+    color: var(--cream);
+    letter-spacing: 4px;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(11px, 1.5vw, 14px);
+    letter-spacing: 5px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-desc {
+    max-width: 520px;
+    font-size: 15px;
+    color: rgba(245,242,236,0.6);
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: var(--cream);
+    color: var(--black-deep);
+    padding: .75rem 2rem;
+    border-radius: 4px;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--cream-dim); transform: translateY(-2px); }
+
+  .btn-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cream);
+    border: 1.5px solid rgba(242,217,126,0.4);
+    padding: .75rem 2rem;
+    border-radius: 4px;
+    transition: border-color .2s, transform .15s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { border-color: var(--cream); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+    opacity: 0.3;
+  }
+
+  .hero-scroll span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--cream);
+    animation: scrolldown 1.6s ease-in-out infinite;
+  }
+
+  @keyframes scrolldown {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ---- SECTION BASE ---- */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--cream);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ---- ABOUT ---- */
+  .about {
+    background: var(--black-deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-bolt-big {
+    opacity: .08;
+    width: 300px;
+  }
+
+  .about-text p {
+    color: rgba(245,242,236,0.6);
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(242,217,126,0.12);
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 42px;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* ---- EVENTS ---- */
+  .events { background: var(--black); }
+
+  .events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .event-card {
+    background: var(--black-deep);
+    border: 1px solid rgba(242,217,126,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color .2s, transform .2s;
+    cursor: pointer;
+  }
+
+  .event-card:hover {
+    border-color: rgba(242,217,126,0.3);
+    transform: translateY(-4px);
+  }
+
+  .event-card-top {
+    background: rgba(242,217,126,0.04);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(242,217,126,0.08);
+  }
+
+  .event-date-block {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+
+  .event-day {
+    font-size: 42px;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .event-month {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .event-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black-deep);
+    background: var(--cream);
+    padding: .25rem .6rem;
+    border-radius: 3px;
+  }
+
+  .event-card-body { padding: 1.5rem; }
+
+  .event-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: .4rem;
+    line-height: 1.1;
+  }
+
+  .event-place {
+    font-size: 13px;
+    color: var(--gray);
+    letter-spacing: .5px;
+  }
+
+  /* ---- JOIN ---- */
+  .join {
+    background: var(--cream);
+    text-align: center;
+    padding: 6rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .join::before {
+    content: 'RASUB';
+    position: absolute;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 220px;
+    color: rgba(22,24,25,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 10px;
+  }
+
+  .join .section-label { color: var(--black-deep); justify-content: center; }
+  .join .section-label::before { background: var(--black-deep); }
+
+  .join .section-title { color: var(--black-deep); }
+
+  .join-desc {
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    color: rgba(22,24,25,0.6);
+    font-size: 15px;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .join-form {
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .join-input {
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    padding: .75rem 1.2rem;
+    border-radius: 4px;
+    border: 1.5px solid rgba(22,24,25,0.2);
+    background: rgba(255,255,255,0.5);
+    color: var(--black-deep);
+    width: 260px;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  .join-input::placeholder { color: rgba(22,24,25,0.35); }
+  .join-input:focus { border-color: var(--black-deep); }
+
+  .btn-dark {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--black-deep);
+    color: var(--cream);
+    border: none;
+    padding: .75rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+
+  .btn-dark:hover { background: #000; transform: translateY(-2px); }
+
+  /* ---- CONTACT ---- */
+  .contact {
+    background: var(--black-deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-info p {
+    color: rgba(245,242,236,0.5);
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: .8rem; }
+
+  .contact-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--cream);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    opacity: .7;
+    transition: opacity .2s;
+  }
+
+  .contact-link:hover { opacity: 1; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-input, .form-textarea {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: .8rem 1.1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(242,217,126,0.12);
+    border-radius: 4px;
+    color: var(--white);
+    outline: none;
+    transition: border-color .2s;
+    resize: none;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(245,242,236,0.25); }
+  .form-input:focus, .form-textarea:focus { border-color: rgba(242,217,126,0.4); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--black-deep);
+    border-top: 1px solid rgba(242,217,126,0.08);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gray-dim);
+    text-transform: uppercase;
+  }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-dim);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .footer-links a:hover { color: var(--cream); }
+
+  /* ---- SVG BOLT ---- */
+  .bolt-svg { fill: var(--cream); }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(242,217,126,0.08);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 800px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about, .contact { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-visual { display: none; }
+    .events-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(3,1fr); }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg class="nav-bolt" viewBox="0 0 36 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="22,2 4,32 16,32 14,54 32,24 20,24" fill="#f2d97e"/>
+    </svg>
+    <span class="nav-name">RASUB</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">L'asso</a></li>
+    <li><a href="#events">Événements</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#join" class="nav-cta">Rejoindre</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-bolt" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="52,4 8,68 34,68 28,116 72,52 46,52" fill="#f2d97e"/>
+  </svg>
+  <h1 class="hero-title">RASUB</h1>
+  <p class="hero-sub">Ride and Shape Union Bordeaux</p>
+  <p class="hero-desc">L'association VTT de Bordeaux — enduro, jump, trail. On roule ensemble, on construit ensemble.</p>
+  <div class="hero-actions">
+    <a href="#join" class="btn-primary">Nous rejoindre</a>
+    <a href="#events" class="btn-secondary">Voir les events</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual">
+    <svg class="about-bolt-big" viewBox="0 0 120 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="78,6 12,102 51,102 42,174 108,78 69,78" fill="#f2d97e"/>
+    </svg>
+  </div>
+  <div class="about-text">
+    <div class="section-label">L'association</div>
+    <h2 class="section-title">Nés sur les pistes de Bordeaux</h2>
+    <p>RASUB c'est une bande de riders qui ont décidé de formaliser ce qui existait déjà — des sessions, des spots partagés, une communauté qui pousse chacun à progresser.</p>
+    <p>On pratique l'enduro, le jump et le trail autour de Bordeaux et en Gironde. On organise des sorties, on build des spots, et on accueille tous les niveaux.</p>
+    <div class="stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Riders actifs</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Spots principaux</div>
+      </div>
+      <div>
+        <div class="stat-num">2025</div>
+        <div class="stat-label">Fondation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="events-header">
+    <div>
+      <div class="section-label">Agenda</div>
+      <h2 class="section-title">Prochains événements</h2>
+    </div>
+    <a href="#" class="btn-secondary" style="font-size:13px">Tout voir</a>
+  </div>
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-card-top">
+        <div class="event-date-block">
+          <div class="event-day">22</div>
+          <div class="event-month">Mars 2026</div>
+        </div>
+        <span class="event-tag">Sortie</span>
+      </div>
+      <div class="event-card-body">
+        <div class="event-name">Session enduro Pessac</div>
+        <div class="event-place">Forêt de Pessac — tous niveaux</div>
+      </div>
+    </div>
+    <div class="event-card">
+      <div class="event-card-top">
+        <div class="event-date-block">
+          <div class="event-day">05</div>
+          <div class="event-month">Avr 2026</div>
+        </div>
+        <span class="event-tag">Build</span>
+      </div>
+      <div class="event-card-body">
+        <div class="event-name">Journée chantier spot</div>
+        <div class="event-place">Step up + table — Pessac</div>
+      </div>
+    </div>
+    <div class="event-card">
+      <div class="event-card-top">
+        <div class="event-date-block">
+          <div class="event-day">19</div>
+          <div class="event-month">Avr 2026</div>
+        </div>
+        <span class="event-tag">Rando</span>
+      </div>
+      <div class="event-card-body">
+        <div class="event-name">Trail Médoc — journée</div>
+        <div class="event-place">Départ Lacanau — 40km</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section class="join" id="join">
+  <div class="section-label">Membres</div>
+  <h2 class="section-title">Rejoins l'asso</h2>
+  <p class="join-desc">Inscris-toi pour recevoir les infos des sorties, les dates de chantier et les nouvelles de l'asso. Ouvert à tous les riders.</p>
+  <div class="join-form">
+    <input type="text" class="join-input" placeholder="Ton prénom">
+    <input type="email" class="join-input" placeholder="Ton email">
+    <button class="btn-dark">S'inscrire →</button>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">On est là</h2>
+    <p>Une question, une idée, tu veux venir rouler avant de t'inscrire ? Contacte-nous ou retrouve-nous sur les réseaux.</p>
+    <div class="contact-links">
+      <a href="mailto:contact@rasub.fr" class="contact-link">✉ contact@rasub.fr</a>
+      <a href="#" class="contact-link">📸 @rasub_bordeaux</a>
+      <a href="#" class="contact-link">◈ Strava Club RASUB</a>
+    </div>
+  </div>
+  <form class="contact-form">
+    <input type="text" class="form-input" placeholder="Nom">
+    <input type="email" class="form-input" placeholder="Email">
+    <textarea class="form-textarea" rows="5" placeholder="Ton message..."></textarea>
+    <button type="submit" class="btn-primary" style="align-self:flex-start">Envoyer →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <svg width="14" height="22" viewBox="0 0 36 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="22,2 4,32 16,32 14,54 32,24 20,24" fill="#f2d97e"/>
+    </svg>
+    <span class="footer-copy">© 2025 RASUB — Bordeaux</span>
+  </div>
+  <div class="footer-links">
+    <a href="#about">L'asso</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
